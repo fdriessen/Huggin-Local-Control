@@ -43,7 +43,6 @@ void setup() {
   Wire.begin(slaveAddress);
    
   // define callbacks for i2c communication
-  //Wire.onReceive(receiveData);
   Wire.onRequest(sendData); 
 }
 
@@ -129,16 +128,6 @@ void sendDistance(char name[10], int distance) {
     Serial.print(" cm");
   }
 }
-
-/******************************************************/
-/* Funct:   receiveData                              */
-/*----------------------------------------------------*/
-/* Input:   howMany                                   */
-/* Output:  -                                         */
-/******************************************************/
-/*void receiveData(int howMany) {
-  // ...
-}*/
 
 /******************************************************/
 /* Funct:   sendData                                  */
