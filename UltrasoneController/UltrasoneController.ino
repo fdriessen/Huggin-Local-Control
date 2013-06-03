@@ -9,7 +9,7 @@
 #define trigDownPin 12
 #define echoDownPin 13
 
-#define slaveAddress 0x40
+#define slaveAddress 0x42
 
 #define numMeas 4 //Define messuring times for an avg value
 
