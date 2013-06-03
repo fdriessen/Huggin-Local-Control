@@ -266,13 +266,13 @@ void evaluateCommand() {
      headSerialReply(11);
      serialize16(cycleTime);
      serialize16(i2c_errors_count);
-     serialize16(ACC|BARO<<1|MAG<<2|GPS<<3|SONAR<<4);
+     serialize16(ACC|(BARO || ULTRA)<<1|MAG<<2|GPS<<3|SONAR<<4);
      serialize32(
                  #if ACC
                    f.ANGLE_MODE<<BOXANGLE|
                    f.HORIZON_MODE<<BOXHORIZON|
                  #endif
-                 #if BARO && (!defined(SUPPRESS_BARO_ALTHOLD))
+                 #if ((BARO && !defined(SUPPRESS_BARO_ALTHOLD)) || (ULTRA && !defined(SUPPRESS_ULTRA_ALTHOLD)))
                    f.BARO_MODE<<BOXBARO|
                  #endif
                  #if MAG

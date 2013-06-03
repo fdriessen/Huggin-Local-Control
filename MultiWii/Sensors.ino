@@ -727,6 +727,47 @@ uint8_t Baro_update() {                            // first UT conversion is sta
 
 
 // ************************************************************************************************************
+// I2C Ultrasone controller (by TU/e Huginn group) 
+// ************************************************************************************************************
+// I2C adress: 0x42
+// ************************************************************************************************************
+
+#if defined(ULTRACONTROLLER)
+  #define ULTRA_ADDRESS 0x42  // address for Ultrasone controller
+
+// I2C read subroutine
+uint8_t Ultracontrol_update() {
+  byte ultra_data[4];
+  
+  i2c_read_to_buf(ULTRA_ADDRESS, ultra_data, 4);
+  
+  ultraDistUp   = ultra_data[0] + (ultra_data[1] << 8);
+  ultraDistDown = ultra_data[2] + (ultra_data[3] << 8);
+  debug[1] = ultraDistDown;
+  debug[2] = ultraDistUp;
+  return 1;
+}
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ************************************************************************************************************
 // I2C Accelerometer MMA7455 
 // ************************************************************************************************************
 #if defined(MMA7455)

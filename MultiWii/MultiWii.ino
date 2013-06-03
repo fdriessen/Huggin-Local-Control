@@ -48,7 +48,7 @@ enum box {
     BOXANGLE,
     BOXHORIZON,
   #endif
-  #if BARO && (!defined(SUPPRESS_BARO_ALTHOLD))
+  #if ((BARO && !defined(SUPPRESS_BARO_ALTHOLD)) || (ULTRA && !defined(SUPPRESS_ULTRA_ALTHOLD)))
     BOXBARO,
   #endif
   #if MAG
@@ -92,7 +92,7 @@ const char boxnames[] PROGMEM = // names for dynamic generation of config GUI
     "ANGLE;"
     "HORIZON;"
   #endif
-  #if BARO && (!defined(SUPPRESS_BARO_ALTHOLD))
+  #if ((BARO && !defined(SUPPRESS_BARO_ALTHOLD)) || (ULTRA && !defined(SUPPRESS_ULTRA_ALTHOLD)))
     "BARO;"
   #endif
   #if MAG
@@ -411,6 +411,11 @@ static struct {
   static int32_t baroPressureSum;
 #endif
 
+#if ULTRA
+  static uint16_t ultraDistUp;
+  static uint16_t ultraDistDown;
+#endif
+
 void annexCode() { // this code is excetuted at each loop and won't interfere with control loop if it lasts less than 650 microseconds
   static uint32_t calibratedAccTime;
   uint16_t tmp,tmp2;
@@ -690,6 +695,7 @@ void setup() {
   f.SMALL_ANGLES_25=1; // important for gyro only conf
 
   debugmsg_append_str("initialization completed\n");
+
 }
 
 void go_arm() {
@@ -925,7 +931,7 @@ void loop () {
       if (f.ANGLE_MODE || f.HORIZON_MODE) {STABLEPIN_ON;} else {STABLEPIN_OFF;}
     #endif
 
-    #if BARO && (!defined(SUPPRESS_BARO_ALTHOLD))
+    #if ((BARO && !defined(SUPPRESS_BARO_ALTHOLD)) || (ULTRA && !defined(SUPPRESS_ULTRA_ALTHOLD)))
       if (rcOptions[BOXBARO]) {
           if (!f.BARO_MODE) {
             f.BARO_MODE = 1;
@@ -1041,13 +1047,23 @@ void loop () {
             break;
           }
         #endif
+        #if ULTRA
+          if (Ultracontrol_update() != 0 ) {
+            break;
+          }
+        #endif
       case 2:
         taskOrder++;
         #if BARO
           if (getEstimatedAltitude() !=0) {
             break;
           }
-        #endif    
+        #endif
+        #if ULTRA
+          if (Ultracontrol_getAltitude() !=0) {
+            break;
+          }
+        #endif
       case 3:
         taskOrder++;
         #if GPS
@@ -1120,7 +1136,7 @@ void loop () {
     } else magHold = heading;
   #endif
 
-  #if BARO && (!defined(SUPPRESS_BARO_ALTHOLD))
+  #if ((BARO && !defined(SUPPRESS_BARO_ALTHOLD)) || (ULTRA && !defined(SUPPRESS_ULTRA_ALTHOLD)))
     if (f.BARO_MODE) {
       if (abs(rcCommand[THROTTLE]-initialThrottleHold)>ALT_HOLD_THROTTLE_NEUTRAL_ZONE) {
         f.BARO_MODE = 0; // so that a new althold reference is defined

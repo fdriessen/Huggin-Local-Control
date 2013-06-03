@@ -925,7 +925,7 @@ PROGMEM const void * const lcd_param_ptr_table [] = {
       &lcd_param_text42, &conf.activate[BOXHORIZON], &__AUX4,
     #endif
   #endif
-  #if BARO && (!defined(SUPPRESS_BARO_ALTHOLD))
+  #if (BARO && (!defined(SUPPRESS_BARO_ALTHOLD))) || (ULTRA && (!defined(SUPPRESS_ULTRA_ALTHOLD)))
     &lcd_param_text43, &conf.activate[BOXBARO], &__AUX1,
     &lcd_param_text43, &conf.activate[BOXBARO], &__AUX2,
     #ifndef SUPPRESS_LCD_CONF_AUX34

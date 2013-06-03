@@ -83,7 +83,7 @@
          please submit any correction to this list.
            Note from Alex: I only own some boards, for other boards, I'm not sure, the info was gathered via rc forums, be cautious */
       //#define FFIMUv1         // first 9DOF+baro board from Jussi, with HMC5843                   <- confirmed by Alex
-      #define FFIMUv2         // second version of 9DOF+baro board from Jussi, with HMC5883       <- confirmed by Alex
+      //#define FFIMUv2         // second version of 9DOF+baro board from Jussi, with HMC5883       <- confirmed by Alex
       //#define FREEIMUv1       // v0.1 & v0.2 & v0.3 version of 9DOF board from Fabio
       //#define FREEIMUv03      // FreeIMU v0.3 and v0.3.1
       //#define FREEIMUv035     // FreeIMU v0.3.5 no baro
@@ -145,7 +145,7 @@
       /* leave it commented if you already checked a specific board above */
       /* I2C gyroscope */
       //#define WMP
-      //#define ITG3200
+      #define ITG3200
       //#define L3G4200D
       //#define MPU6050       //combo + ACC
 
@@ -154,7 +154,7 @@
       //#define MMA7455
       //#define ADXL345
       //#define BMA020
-      //#define BMA180
+      #define BMA180
       //#define NUNCHACK  // if you want to use the nunckuk as a standalone I2C ACC without WMP
       //#define LIS3LV02
       //#define LSM303DLx_ACC
@@ -165,10 +165,13 @@
 
       /* I2C magnetometer */
       //#define HMC5843
-      //#define HMC5883
+      #define HMC5883
       //#define AK8975
       //#define MAG3110
 
+      /* I2C Ultrasone Sonar */
+      #define ULTRACONTROLLER //I2C ultrasone sonar controller by TU/e huginn group
+      
       /* Sonar */ // for visualization purpose currently - no control code behind
       //#define SRF02 // use the Devantech SRF i2c sensors
       //#define SRF08
@@ -179,9 +182,9 @@
       //#define ADCACC
 
       /* individual sensor orientation */
-      //#define ACC_ORIENTATION(X, Y, Z)  {accADC[ROLL]  =  Y; accADC[PITCH]  = -X; accADC[YAW]  = Z;}
-      //#define GYRO_ORIENTATION(X, Y, Z) {gyroADC[ROLL] = -Y; gyroADC[PITCH] =  X; gyroADC[YAW] = Z;}
-      //#define MAG_ORIENTATION(X, Y, Z)  {magADC[ROLL]  =  X; magADC[PITCH]  =  Y; magADC[YAW]  = Z;}
+      #define ACC_ORIENTATION(X, Y, Z)  {accADC[ROLL]  = -X; accADC[PITCH]  = -Y; accADC[YAW]  =  Z;}
+      #define GYRO_ORIENTATION(X, Y, Z) {gyroADC[ROLL] =  Y; gyroADC[PITCH] = -X; gyroADC[YAW] = -Z;}
+      #define MAG_ORIENTATION(X, Y, Z)  {magADC[ROLL]  =  Y; magADC[PITCH]  = -X; magADC[YAW]  = -Z;}
 
 /*************************************************************************************************/
 /*****************                                                                 ***************/
@@ -620,9 +623,9 @@
        note: only the RX PIN is used, the GPS is not configured by multiwii
        the GPS must be configured to output GGA and RMC NMEA sentences (which is generally the default conf for most GPS devices)
        at least 5Hz update rate. uncomment the first line to select the GPS serial port of the arduino */
-    #define GPS_SERIAL 2 // should be 2 for flyduino v2. It's the serial port number on arduino MEGA
+    //#define GPS_SERIAL 2 // should be 2 for flyduino v2. It's the serial port number on arduino MEGA
     //#define GPS_BAUD   57600
-    #define GPS_BAUD   115200
+    //#define GPS_BAUD   115200
 
 
     /* GPS protocol 
@@ -836,12 +839,13 @@
 
     /* uncomment to disable the altitude hold feature.
      * This is useful if all of the following apply
-     * + you have a baro
+     * + you have a baro or ultrasone controller
      * + want altitude readout
      * + do not use altitude hold feature
      * + want to save memory space
      */
     //#define SUPPRESS_BARO_ALTHOLD
+    #define SUPPRESS_ULTRA_ALTHOLD
 
   /********************************************************************/
   /****           baord naming                                     ****/

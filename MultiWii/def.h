@@ -1125,6 +1125,12 @@
   #define SONAR 0
 #endif
 
+#if defined(ULTRACONTROLLER)
+  #define ULTRA 1
+#else
+  #define ULTRA 0
+#endif
+
 
 /**************************************************************************************/
 /***************      Multitype decleration for the GUI's          ********************/
