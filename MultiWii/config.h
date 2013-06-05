@@ -845,7 +845,7 @@
      * + want to save memory space
      */
     //#define SUPPRESS_BARO_ALTHOLD
-    #define SUPPRESS_ULTRA_ALTHOLD
+    //#define SUPPRESS_ULTRA_ALTHOLD
 
   /********************************************************************/
   /****           baord naming                                     ****/

@@ -408,14 +408,14 @@ uint16_t Ultracontrol_getAltitude(){
     // By using CF it's possible to correct the drift of integrated accZ (velocity) without loosing the phase, i.e without delay
     vel = vel * 0.985f + baroVel * 0.015f;
     //vel = constrain(vel, -300, 300); // constrain velocity +/- 300cm/s 
-    //debug[2] = vel;
+    debug[2] = vel;
     
     //D
     float vel_tmp = vel;
     applyDeadband(vel_tmp, 5);
     vario = vel_tmp;
     BaroPID -= constrain(conf.D8[PIDALT] * vel_tmp / 20, -150, 150);
-    //debug[3] = BaroPID;
+    debug[3] = BaroPID;
   #endif
   return 1;
 }

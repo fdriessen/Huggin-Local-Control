@@ -743,8 +743,10 @@ uint8_t Ultracontrol_update() {
   
   ultraDistUp   = ultra_data[0] + (ultra_data[1] << 8);
   ultraDistDown = ultra_data[2] + (ultra_data[3] << 8);
-  debug[1] = ultraDistDown;
-  debug[2] = ultraDistUp;
+  
+  debug[0] = ultraDistDown;
+  debug[1] = ultraDistUp;
+  
   return 1;
 }
 
