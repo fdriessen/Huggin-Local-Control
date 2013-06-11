@@ -1032,7 +1032,7 @@ void loop () {
     #endif
   } else { // not in rc loop
     static uint8_t taskOrder=0; // never call all functions in the same loop, to avoid high delay spikes
-    switch (taskOrder % 6) {
+    switch (taskOrder % 5) {
       case 0:
         taskOrder++;
         #if MAG
@@ -1059,14 +1059,12 @@ void loop () {
             break;
           }
         #endif
-      case 3:
-        taskOrder++;
         #if ULTRA
           if (Ultracontrol_getAltitude() !=0) {
             break;
           }
         #endif
-      case 4:
+      case 3:
         taskOrder++;
         #if GPS
           if(GPS_Enable) {
@@ -1074,7 +1072,7 @@ void loop () {
           }
           break;
         #endif
-      case 5:
+      case 4:
         taskOrder++;
         #if SONAR
           Sonar_update();debug[2] = sonarAlt;

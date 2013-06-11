@@ -170,7 +170,7 @@
       //#define MAG3110
 
       /* I2C Ultrasone Sonar */
-      #define ULTRACONTROLLER //I2C ultrasone sonar controller by TU/e huginn group
+      #define ULTRACONTROLLER //I2C ultrasone sonar controller by TU/e Huginn group
       
       /* Sonar */ // for visualization purpose currently - no control code behind
       //#define SRF02 // use the Devantech SRF i2c sensors

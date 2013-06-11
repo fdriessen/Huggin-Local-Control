@@ -373,8 +373,8 @@ uint16_t Ultracontrol_getAltitude(){
   #ifndef SUPPRESS_ULTRA_ALTHOLD
     //P
     int16_t error = constrain(AltHold - EstAlt, -300, 300);
-    applyDeadband(error, 10); //remove small P parametr to reduce noise near zero position
-    BaroPID = constrain((conf.P8[PIDALT] * error / 100), -150, +150);
+    applyDeadband(error, 2); //remove small P parametr to reduce noise near zero position
+    BaroPID = constrain((conf.P8[PIDALT] * error / 10), -150, +150);
     
     //I
     errorAltitudeI += error * conf.I8[PIDALT]/50;
@@ -397,16 +397,16 @@ uint16_t Ultracontrol_getAltitude(){
     vel+= accZ * accVelScale * dTime;
     
     static int32_t lastUltraAlt;
-    float baroVel = (EstAlt - lastUltraAlt) * 1000000.0f / dTime;
+    float ultraVel = (EstAlt - lastUltraAlt) * 1000000.0f / dTime;
     lastUltraAlt = EstAlt;
   
-    baroVel = constrain(baroVel, -300, 300); // constrain baro velocity +/- 300cm/s
-    applyDeadband(baroVel, 10); // to reduce noise near zero  
-    //debug[1] = baroVel;
+    ultraVel = constrain(ultraVel, -300, 300); // constrain baro velocity +/- 300cm/s
+    applyDeadband(ultraVel, 10); // to reduce noise near zero  
+    //debug[1] = ultraVel;
     
     // apply Complimentary Filter to keep the calculated velocity based on baro velocity (i.e. near real velocity). 
     // By using CF it's possible to correct the drift of integrated accZ (velocity) without loosing the phase, i.e without delay
-    vel = vel * 0.985f + baroVel * 0.015f;
+    vel = vel * 0.50f + ultraVel * 0.50f;
     //vel = constrain(vel, -300, 300); // constrain velocity +/- 300cm/s 
     debug[2] = vel;
     
