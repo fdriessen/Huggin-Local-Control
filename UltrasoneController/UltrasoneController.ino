@@ -4,10 +4,20 @@
  
 #include <Wire.h>  // Include I2C library
 
+#define DEBUG 0
+
 #define trigUpPin 10
 #define echoUpPin 11
 #define trigDownPin 12
 #define echoDownPin 13
+
+#define accuCell1Pin A0
+#define accuCell2Pin A1
+#define accuCell3Pin A2
+
+#define buzzerPin 3
+
+#define accuTreshold 330    // Treshold off accu cells
 
 #define slaveAddress 0x42
 
@@ -32,6 +42,8 @@ void setup() {
   pinMode(echoUpPin, INPUT);
   pinMode(trigDownPin, OUTPUT);
   pinMode(echoDownPin, INPUT);
+  
+  pinMode(buzzerPin, OUTPUT);
   
   // init all temp distances to 0
   for (int c = 0; c < numMeas; c++) {
@@ -84,11 +96,47 @@ void loop() {
   sendDistance("Up ",distanceUp);
   sendDistance(" Down ",distanceDown);
   
+  // Check accu
+  int lowestCell = messAccuCells();
+  if (lowestCell < accuTreshold){
+    digitalWrite(buzzerPin, HIGH);
+    Serial.print(" Buzzer aan ");
+  } else {
+    digitalWrite(buzzerPin, LOW);
+    Serial.print(" Buzzer uit ");
+  }
   
+  Serial.print(lowestCell);
   
+  #if DEBUG
   Serial.println();
+  #endif
   
   delay(10);
+}
+/******************************************************/
+/* Funct:   messAccuCells                              */
+/*----------------------------------------------------*/
+/* Input:   -                                         */
+/* Output:  lowestCell                                */
+/******************************************************/
+int messAccuCells() {
+  int inputCell1, inputCell2, inputCell3;
+  
+  inputCell1 = map(analogRead(accuCell1Pin), 0, 1023, 0, 500);
+  inputCell2 = map(analogRead(accuCell2Pin), 0, 1023, 0, 1000)-inputCell1;
+  inputCell3 = map(analogRead(accuCell3Pin), 0, 1023, 0, 1500)-inputCell1-inputCell2;
+  
+  #if DEBUG
+  Serial.print(" Cell1=");
+  Serial.print(inputCell1);
+  Serial.print(" Cell2=");
+  Serial.print(inputCell2);
+  Serial.print(" Cell3=");
+  Serial.print(inputCell3);
+  #endif
+  
+  return min(min(inputCell1, inputCell2), inputCell3); 
 }
 
 /******************************************************/
@@ -119,13 +167,19 @@ int getDistance(int trigPin, int echoPin) {
 /* Output:  -                                         */
 /******************************************************/
 void sendDistance(char name[10], int distance) { 
+  #if DEBUG
   Serial.print(name);
+  #endif
   if (distance >= 4000 || distance <= 0){
+    #if DEBUG
     Serial.println("Out of range");
+    #endif
   }
   else {
+    #if DEBUG
     Serial.print(distance);
     Serial.print(" cm");
+    #endif
   }
 }
 
