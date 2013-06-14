@@ -16,6 +16,7 @@
 #define accuCell3Pin A2
 
 #define buzzerPin 3
+#define alarmLedPin A3
 
 #define accuTreshold 330    // Treshold off accu cells
 
@@ -44,6 +45,7 @@ void setup() {
   pinMode(echoDownPin, INPUT);
   
   pinMode(buzzerPin, OUTPUT);
+  pinMode(alarmLedPin, OUTPUT);
   
   // init all temp distances to 0
   for (int c = 0; c < numMeas; c++) {
@@ -100,9 +102,11 @@ void loop() {
   int lowestCell = messAccuCells();
   if (lowestCell < accuTreshold){
     digitalWrite(buzzerPin, HIGH);
+    digitalWrite(alarmLedPin, HIGH);
     Serial.print(" Buzzer aan ");
   } else {
     digitalWrite(buzzerPin, LOW);
+    digitalWrite(alarmLedPin, LOW);
     Serial.print(" Buzzer uit ");
   }
   
