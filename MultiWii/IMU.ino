@@ -312,7 +312,7 @@ uint8_t getEstimatedAltitude(){
     //P
     int16_t error = constrain(AltHold - EstAlt, -300, 300);
     applyDeadband(error, 10); //remove small P parametr to reduce noise near zero position
-    BaroPID = constrain((conf.P8[PIDALT] * error / 100), -150, +150);
+    BaroPID = constrain((conf.P8[PIDALT] * error / 100), -50, +50);
     
     //I
     errorAltitudeI += error * conf.I8[PIDALT]/50;
@@ -408,7 +408,7 @@ uint16_t Ultracontrol_getAltitude(){
     // By using CF it's possible to correct the drift of integrated accZ (velocity) without loosing the phase, i.e without delay
     vel = vel * 0.985f + ultraVel * 0.015f;
     //vel = constrain(vel, -300, 300); // constrain velocity +/- 300cm/s 
-    debug[2] = vel;
+    //debug[2] = vel;
     
     //D
     float vel_tmp = vel;
@@ -416,6 +416,12 @@ uint16_t Ultracontrol_getAltitude(){
     vario = vel_tmp;
     BaroPID -= constrain(conf.D8[PIDALT] * vel_tmp / 20, -150, 150);
     debug[3] = BaroPID;
+    
+    #ifdef ALT_MAX_ULTRA_UP
+      if(ultraDistUp < ALT_MAX_ULTRA_UP) {
+        BaroPID = -50;
+      }
+    #endif
   #endif
   return 1;
 }

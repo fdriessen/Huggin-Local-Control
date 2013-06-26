@@ -935,7 +935,13 @@ void loop () {
       if (rcOptions[BOXBARO]) {
           if (!f.BARO_MODE) {
             f.BARO_MODE = 1;
+            
+            #if defined(ALT_HOLD_FIX_HEIGHT)
+              AltHold = ALT_HOLD_FIX_HEIGHT;
+            #elif
             AltHold = EstAlt;
+            #endif
+            
             initialThrottleHold = rcCommand[THROTTLE];
             errorAltitudeI = 0;
             BaroPID=0;
@@ -1049,6 +1055,7 @@ void loop () {
         #endif
         #if ULTRA
           if (Ultracontrol_update() != 0 ) {
+            
             break;
           }
         #endif
@@ -1061,6 +1068,7 @@ void loop () {
         #endif
         #if ULTRA
           if (Ultracontrol_getAltitude() !=0) {
+            initialThrottleHold = rcCommand[THROTTLE];
             break;
           }
         #endif
@@ -1138,10 +1146,13 @@ void loop () {
 
   #if ((BARO && !defined(SUPPRESS_BARO_ALTHOLD)) || (ULTRA && !defined(SUPPRESS_ULTRA_ALTHOLD)))
     if (f.BARO_MODE) {
+      
       if (abs(rcCommand[THROTTLE]-initialThrottleHold)>ALT_HOLD_THROTTLE_NEUTRAL_ZONE) {
         f.BARO_MODE = 0; // so that a new althold reference is defined
       }
+      
       rcCommand[THROTTLE] = initialThrottleHold + BaroPID;
+      
     }
   #endif
   #if GPS
