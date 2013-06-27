@@ -368,8 +368,10 @@ uint16_t Ultracontrol_getAltitude(){
   uint16_t dTime = currentTime - deadLine;
   deadLine = currentTime;
   
-  EstAlt = ultraDistDown;
-
+  //Pitch correction  25*pi/1800*2^12 = 179
+  int32_t Alt_correction = (angle[PITCH]*179)>>12;
+  EstAlt = Alt_correction + ultraDistDown;
+  
   #ifndef SUPPRESS_ULTRA_ALTHOLD
     //P
     int16_t error = constrain(AltHold - EstAlt, -300, 300);
