@@ -935,7 +935,13 @@ void loop () {
       if (rcOptions[BOXBARO]) {
           if (!f.BARO_MODE) {
             f.BARO_MODE = 1;
-            AltHold = EstAlt;
+            
+            #if defined(FIX_ALT_HOLD_HEIGHT)
+              AltHold = FIX_ALT_HOLD_HEIGHT;
+            #elif
+              AltHold = EstAlt;
+            #endif
+            
             initialThrottleHold = rcCommand[THROTTLE];
             errorAltitudeI = 0;
             BaroPID=0;
@@ -1142,6 +1148,8 @@ void loop () {
         f.BARO_MODE = 0; // so that a new althold reference is defined
       }
       rcCommand[THROTTLE] = initialThrottleHold + BaroPID;
+      debug[2] = initialThrottleHold;
+      
     }
   #endif
   #if GPS

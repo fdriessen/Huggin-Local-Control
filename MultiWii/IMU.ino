@@ -369,7 +369,7 @@ uint16_t Ultracontrol_getAltitude(){
   deadLine = currentTime;
   
   //Pitch correction  25*pi/1800*2^12 = 179
-  int32_t Alt_correction = (angle[PITCH]*179)>>12;
+  int32_t Alt_correction = ((int32_t)angle[PITCH]*11438)>>18;
   EstAlt = Alt_correction + ultraDistDown;
   
   #ifndef SUPPRESS_ULTRA_ALTHOLD
@@ -382,7 +382,7 @@ uint16_t Ultracontrol_getAltitude(){
     errorAltitudeI += error * conf.I8[PIDALT]/50;
     errorAltitudeI = constrain(errorAltitudeI,-30000,30000);
     BaroPID += (errorAltitudeI / 500); //I in range +/-60
-    
+    debug[1] = BaroPID;
     
     // projection of ACC vector to global Z, with 1G subtructed
     // Math: accZ = A * G / |G| - 1G
@@ -410,7 +410,7 @@ uint16_t Ultracontrol_getAltitude(){
     // By using CF it's possible to correct the drift of integrated accZ (velocity) without loosing the phase, i.e without delay
     vel = vel * 0.985f + ultraVel * 0.015f;
     //vel = constrain(vel, -300, 300); // constrain velocity +/- 300cm/s 
-    debug[2] = vel;
+    //debug[2] = vel;
     
     //D
     float vel_tmp = vel;
