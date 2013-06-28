@@ -846,8 +846,6 @@
      */
     //#define SUPPRESS_BARO_ALTHOLD
     //#define SUPPRESS_ULTRA_ALTHOLD
-    #define ALT_HOLD_FIX_HEIGHT 100
-    //#define ALT_MAX_ULTRA_UP 50
 
   /********************************************************************/
   /****           baord naming                                     ****/
