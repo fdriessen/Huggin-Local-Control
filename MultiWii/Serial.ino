@@ -68,6 +68,7 @@ const uint32_t PROGMEM capability = 0+BIND_CAPABLE;
 #define MSP_RESET_CONF           208   //in message          no param
 #define MSP_SET_WP               209   //in message          sets a given WP (WP#,lat, lon, alt, flags)
 #define MSP_SELECT_SETTING       210   //in message          Select Setting Number (0-2)
+#define MSP_BEAGLEBOARD          211   //in message          Global Control
 
 #define MSP_SPEK_BIND            240   //in message          no param
 
@@ -198,12 +199,18 @@ void serialCom() {
 
 void evaluateCommand() {
   switch(cmdMSP[CURRENTPORT]) {
+   case MSP_BEAGLEBOARD:
+     for(uint8_t i=0;i<3;i++) {
+       rcData[i] = read16();
+     }
+     break;
+     headSerialReply(0);
    case MSP_SET_RAW_RC:
      for(uint8_t i=0;i<8;i++) {
        rcData[i] = read16();
      }
-     headSerialReply(0);
      break;
+     headSerialReply(0);
    #if GPS
    case MSP_SET_RAW_GPS:
      f.GPS_FIX = read8();

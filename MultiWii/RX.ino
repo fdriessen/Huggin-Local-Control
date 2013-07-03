@@ -394,13 +394,17 @@ uint16_t readRawRC(uint8_t chan) {
 void computeRC() {
   static uint16_t rcData4Values[RC_CHANS][4], rcDataMean[RC_CHANS];
   static uint8_t rc4ValuesIndex = 0;
-  uint8_t chan,a;
+  uint8_t chan,a,RC_startCH = 0;
   #if !(defined(RCSERIAL) || defined(OPENLRSv2MULTI)) // dont know if this is right here
     #if defined(SBUS)
       readSBus();
     #endif
     rc4ValuesIndex++;
-    for (chan = 0; chan < RC_CHANS; chan++) {
+	
+	if(rcData[AUX2] > 1500) RC_startCH = 3;
+	
+	
+    for (chan = RC_startCH; chan < RC_CHANS; chan++) {
       #if defined(FAILSAFE)
         uint16_t rcval = readRawRC(chan);
         if(rcval>FAILSAFE_DETECT_TRESHOLD || chan > 3) {        // update controls channel only if pulse is above FAILSAFE_DETECT_TRESHOLD
