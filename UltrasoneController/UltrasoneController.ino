@@ -10,7 +10,7 @@
 #define echoUpPin 11
 #define trigDownPin 12
 #define echoDownPin 13
-
+/*
 #define accuCell1Pin A0
 #define accuCell2Pin A1
 #define accuCell3Pin A2
@@ -19,7 +19,7 @@
 #define alarmLedPin A3
 
 #define accuTreshold 330    // Treshold off accu cells
-
+*/
 #define slaveAddress 0x42
 
 #define numMeas 4 //Define messuring times for an avg value
@@ -43,10 +43,10 @@ void setup() {
   pinMode(echoUpPin, INPUT);
   pinMode(trigDownPin, OUTPUT);
   pinMode(echoDownPin, INPUT);
-  
+  /*
   pinMode(buzzerPin, OUTPUT);
   pinMode(alarmLedPin, OUTPUT);
-  
+  */
   // init all temp distances to 0
   for (int c = 0; c < numMeas; c++) {
     tempDistUp[c] = 0;
@@ -98,6 +98,7 @@ void loop() {
   sendDistance("Up ",distanceUp);
   sendDistance(" Down ",distanceDown);
   
+  /*
   // Check accu
   int lowestCell = messAccuCells();
   if (lowestCell < accuTreshold){
@@ -115,7 +116,7 @@ void loop() {
   #if DEBUG
   Serial.println();
   #endif
-  
+  */
   delay(10);
 }
 /******************************************************/
@@ -124,6 +125,7 @@ void loop() {
 /* Input:   -                                         */
 /* Output:  lowestCell                                */
 /******************************************************/
+/*
 int messAccuCells() {
   int inputCell1, inputCell2, inputCell3;
   
@@ -142,7 +144,7 @@ int messAccuCells() {
   
   return min(min(inputCell1, inputCell2), inputCell3); 
 }
-
+*/
 /******************************************************/
 /* Funct:   getDistance                               */
 /*----------------------------------------------------*/
