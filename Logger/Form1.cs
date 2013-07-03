@@ -142,7 +142,7 @@ namespace MultiWiiLogger
                     _serialPort.Write(send_buf, 0, 6);
                     _serialPort.Read(rec_altitude, 0, 12);
 
-                    //Altitude data
+                    //Motors
                     send_buf[4] = 104;
 
                     checksum = 0;
@@ -168,6 +168,30 @@ namespace MultiWiiLogger
                     _serialPort.Read(rec_debug, 0, 14);
 
 
+                    //Set
+                    /*
+                    send_buf[4] = 211;
+
+                    checksum = 0;
+                    checksum ^= send_buf[3];
+                    checksum ^= send_buf[4];
+                    send_buf[5] = 0;
+                    send_buf[6] = 10; //5,6 = Roll
+                    send_buf[7] = 0;
+                    send_buf[8] = 0; //7,8 = Pitch
+                    send_buf[9] = 0;
+                    send_buf[10] = 0; //9,10 = Yaw
+                    checksum ^= send_buf[5];
+                    checksum ^= send_buf[6];
+                    checksum ^= send_buf[7];
+                    checksum ^= send_buf[8];
+                    checksum ^= send_buf[9];
+                    checksum ^= send_buf[10];
+                    send_buf[11] = checksum;
+
+
+                    _serialPort.Write(send_buf, 0, 12);
+                    */
                     // verwerking
                     string NewData = "";
                     for (int i = 0; i < 9; i++)
@@ -176,7 +200,7 @@ namespace MultiWiiLogger
                     }
 
                     NewData += ((int)((int)rec_altitude[5]) + ((int)rec_altitude[6] << 8) + ((int)rec_altitude[7] << 16) + ((int)rec_altitude[8] << 24)).ToString() + ';';//altitude
-                    NewData += ((short)(((short)rec_altitude[9]) + ((short)rec_attitude[10] << 8))).ToString() + ';';//vario
+                    NewData += ((short)(((short)rec_altitude[9]) + ((short)rec_altitude[10] << 8))).ToString() + ';';//vario
 
                     NewData += ((short)(((short)rec_attitude[5]) + ((short)rec_attitude[6] << 8))).ToString() + ';';//angle 1 (roll?)
                     NewData += ((short)(((short)rec_attitude[7]) + ((short)rec_attitude[8] << 8))).ToString() + ';';//angle 2 (pitch?)
