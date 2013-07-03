@@ -1,0 +1,11 @@
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\bin\Release\MultiWiiLogger.exe
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\bin\Release\MultiWiiLogger.pdb
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\obj\x86\Release\ResolveAssemblyReference.cache
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\obj\x86\Release\MultiWiiLogger.Form1.resources
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\obj\x86\Release\MultiWiiLogger.Properties.Resources.resources
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\obj\x86\Release\GenerateResource-ResGen.read.1.tlog
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\obj\x86\Release\GenerateResource-ResGen.write.1.tlog
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\obj\x86\Release\MultiWiiLogger.exe
+D:\Documents\Visual Studio 2010\Projects\MultiWiiLogger\MultiWiiLogger\obj\x86\Release\MultiWiiLogger.pdb
+D:\Desktop\local_controller\Logger\MultiWiiLogger\obj\x86\Release\MultiWiiLogger.exe
+D:\Desktop\local_controller\Logger\MultiWiiLogger\obj\x86\Release\MultiWiiLogger.pdb
