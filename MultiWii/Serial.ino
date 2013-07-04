@@ -210,14 +210,14 @@ void evaluateCommand() {
 		 read16();
        }
 	 }
+	 headSerialReply(0);
      break;
-     headSerialReply(0);
    case MSP_SET_RAW_RC:
      for(uint8_t i=0;i<8;i++) {
        rcData[i] = read16();
      }
+	 headSerialReply(0);
      break;
-     headSerialReply(0);
    #if GPS
    case MSP_SET_RAW_GPS:
      f.GPS_FIX = read8();
