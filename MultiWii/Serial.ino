@@ -205,6 +205,11 @@ void evaluateCommand() {
          rcData[i] = read16();
        }
 	 }
+	 else{
+	   for(uint8_t i=0;i<3;i++) {
+		 read16();
+       }
+	 }
      break;
      headSerialReply(0);
    case MSP_SET_RAW_RC:
