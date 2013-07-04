@@ -376,7 +376,7 @@ uint16_t Ultracontrol_getAltitude(){
     //P
     int16_t error = constrain(AltHold - EstAlt, -300, 300);
     //applyDeadband(error, 2); //remove small P parametr to reduce noise near zero position
-    BaroPID = constrain((conf.P8[PIDALT] * error / 100), -150, +150);
+    BaroPID = constrain((conf.P8[PIDALT] * error / 100), -200, +200); //150
     
     //I
     errorAltitudeI += error * conf.I8[PIDALT]/50;

@@ -200,9 +200,11 @@ void serialCom() {
 void evaluateCommand() {
   switch(cmdMSP[CURRENTPORT]) {
    case MSP_BEAGLEBOARD:
-     for(uint8_t i=0;i<3;i++) {
-       rcData[i] = read16();
-     }
+     if(rcData[AUX2] > 1500) {
+       for(uint8_t i=0;i<3;i++) {
+         rcData[i] = read16();
+       }
+	 }
      break;
      headSerialReply(0);
    case MSP_SET_RAW_RC:
