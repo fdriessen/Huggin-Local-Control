@@ -202,7 +202,9 @@ void evaluateCommand() {
     case MSP_BEAGLEBOARD:
       if(rcData[AUX2] > 1500) {
         for(uint8_t i=0;i<3;i++) {
-          rcData[i] = constrain(read16(), 1400, 1600);
+          rcData[i] = read16();
+          if(rcData[i]<1400) rcData[i]=1400;
+          if(rcData[i]>1600) rcData[i]=1600;
         }
       } else {
         for(uint8_t i=0;i<3;i++) {
