@@ -199,18 +199,17 @@ void serialCom() {
 
 void evaluateCommand() {
   switch(cmdMSP[CURRENTPORT]) {
-   case MSP_BEAGLEBOARD:
-     if(rcData[AUX2] > 1500) {
-       for(uint8_t i=0;i<3;i++) {
-         rcData[i] = read16();
-       }
-	 }
-	 else{
-	   for(uint8_t i=0;i<3;i++) {
-		 read16();
-       }
-	 }
-	 headSerialReply(0);
+    case MSP_BEAGLEBOARD:
+      if(rcData[AUX2] > 1500) {
+        for(uint8_t i=0;i<3;i++) {
+          rcData[i] = constrain(read16(), 1400, 1600);
+        }
+      } else {
+        for(uint8_t i=0;i<3;i++) {
+          read16();
+        }
+      }
+      headSerialReply(0);
      break;
    case MSP_SET_RAW_RC:
      for(uint8_t i=0;i<8;i++) {
